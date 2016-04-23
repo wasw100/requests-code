@@ -1,0 +1,30 @@
+{%- extends "bootstrap/base.html" %}
+{% block navbar %}
+{{nav.top.render(id='top-navbar')}}
+{% endblock %}
+{% block content -%}
+<div class="container">
+    <div class="col-md-12">
+    <form  id="request-form" class="form-horizontal" action="/code" method="post" target="_blank">
+        <div class="form-group">
+            <textarea name="code" class="form-control" rows="32">{{ code }}</textarea>
+        </div>
+        <input type="hidden" name="action" id="action">
+        <button type="button" class="btn btn-default" data-action="download">下载代码</button>
+        <button type="button" class="btn btn-default" data-action="exec">直接执行</button>
+    </form>
+    </div>
+</div>
+{%- endblock content -%}
+{%- block scripts -%}
+{{ super() }}
+<script>
+$(document).ready(function(){
+    $(".btn").on("click", function(){
+        var action = $(this).data("action");
+        $("#action").val(action);
+        $("#request-form").submit()
+    });
+});
+</script>
+{%- endblock scripts -%}

@@ -1,0 +1,52 @@
+# -*- coding: utf-8 -*-
+import requests
+
+
+def main():
+    url = '{{ url }}'
+    {% if params %}
+    params = {
+    {%- for key, value in params %}
+        '{{ key }}': {{ value }},
+    {%- endfor %}
+    }
+    {% endif -%}
+
+    {% if 'x-www-form-urlencoded' in content_type %}
+    data = {
+    {%- for key, value in body %}
+        '{{ key }}': {{ value }},
+    {%- endfor %}
+    }
+    {% elif data %}
+    data = '{{ data }}'
+    {% endif %}
+
+    {%- if headers %}
+    headers = {
+    {%- for key, value in headers %}
+        '{{ key }}': '{{ value }}',
+    {%- endfor %}
+    }
+    {% endif -%}
+
+    {% if cookies %}
+    cookies = {
+    {%- for key, value in cookies %}
+        '{{ key }}': '{{ value }}',
+    {%- endfor %}
+    }
+    {% endif %}
+
+    r = requests.{{ method }}(url
+    {%- if params %}, params=params{% endif -%}
+    {%- if body %}, data=data{% endif -%}
+    {%- if headers %}, headers=headers{% endif -%}
+    {%- if cookies %}, cookies=cookies{% endif -%}
+    )
+    return r.text
+
+
+if __name__ == '__main__':
+    result = main()
+    print(result)

@@ -1,0 +1,6 @@
+Flask
+flask-wtf
+flask-bootstrap
+flask-script
+flask-nav
+requests

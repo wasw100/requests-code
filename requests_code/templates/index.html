@@ -1,0 +1,24 @@
+{%- extends "bootstrap/base.html" %}
+{% block navbar %}
+{{nav.top.render(id='top-navbar')}}
+{% endblock %}
+{% block content -%}
+<div class="container">
+    <div class="col-md-12">
+        <a href="http://www.jianshu.com/p/85d86ffbae87" target="_blank">使用说明</a>
+    </div>
+    <div class="col-md-12">
+    <form class="form-horizontal" id="request-form" method="post" target="_blank">
+        <div class="form-group">
+            {{ form.host.label }}
+            <input type="text" name="host" class="form-control" placeholder="不需要填写, 如果访问指定服务器填写IP或域名">
+        </div>
+        <div class="form-group">
+            {{ form.data.label }}
+            <textarea name="data" class="form-control" rows="32"></textarea>
+        </div>
+        <button type="submit" class="btn btn-default">生成代码</button>
+    </form>
+    </div>
+</div>
+{%- endblock content -%}
