@@ -67,7 +67,7 @@ class IndexView(MethodView):
 
         method = method.lower()
         body = ''.join(body)
-        content_type = header_dict.get('Content-Type')
+        content_type = header_dict.get('Content-Type', '')
 
         # set headers
         headers = []
@@ -75,8 +75,11 @@ class IndexView(MethodView):
         if form.host.data and origin_host and form.host.data != origin_host:
             headers.append(('Host', header_dict.get('Host')))
         user_agent = header_dict.get('User-Agent')
+        referer = header_dict.get('Referer')
         if user_agent:
             headers.append(('User-Agent', user_agent))
+        if referer:
+            headers.append(('Referer', referer))
 
         # set cookie
         cookies = []
