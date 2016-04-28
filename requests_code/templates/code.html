@@ -18,8 +18,8 @@ def main():
         '{{ key }}': {{ value }},
     {%- endfor %}
     }
-    {% elif data %}
-    data = '{{ data }}'
+    {% elif body %}
+    data = '{{ body }}'
     {% endif %}
 
     {%- if headers %}
