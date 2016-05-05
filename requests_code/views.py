@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import absolute_import
+import json
 
 
 from flask import Blueprint, render_template, make_response
@@ -67,7 +68,7 @@ class IndexView(MethodView):
 
         method = method.lower()
         body = ''.join(body)
-        content_type = header_dict.get('Content-Type', '')
+        content_type = header_dict.get('Content-Type')
 
         # set headers
         headers = []
@@ -93,9 +94,14 @@ class IndexView(MethodView):
         url = urljoin('http://{}'.format(host), p.path)
         params = [(x, repr_value(y)) for x, y in parse_qsl(p.query)]
 
-        # data
-        if 'x-www-form-urlencoded' in content_type:
+        if not content_type:
+            pass
+        elif 'x-www-form-urlencoded' in content_type:
             body = [(x, repr_value(y)) for x, y in parse_qsl(body)]
+        elif 'json' in content_type:
+            body = [(x, repr_value(y)) for x, y in json.loads(body).items()]
+        else:
+            headers.append(('Content-Type', content_type))
 
         code = render_template(
             'code.html',
