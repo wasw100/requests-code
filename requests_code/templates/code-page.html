@@ -5,9 +5,18 @@
 {% block content -%}
 <div class="container">
     <div class="col-md-12">
-    <form  id="request-form" class="form-horizontal" action="/code" method="post" target="_blank">
+    <form  id="request-form" class="form-horizontal" action="/run" method="post" target="_blank">
         <div class="form-group">
-            <textarea name="code" class="form-control" rows="32">{{ code }}</textarea>
+            {{ form.name.label }}
+            <input name="name" class="form-control" value="{{ form.name.data or '' }}" placeholder="文件名(会自动生成, 如果重名, 会覆盖掉原来的)" />
+        </div>
+        <div class="form-group">
+            {{ form.desc.label }}
+            <input name="desc" class="form-control" value="{{ form.desc.data or '' }}" placeholder="描述(选填)" />
+        </div>
+        <div class="form-group">
+            {{ form.code.label }}
+            <textarea name="code" class="form-control" rows="32">{{ form.code.data or '' }}</textarea>
         </div>
         <input type="hidden" name="action" id="action">
         <button type="button" class="btn btn-default" data-action="download">下载代码</button>

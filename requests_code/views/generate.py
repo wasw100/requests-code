@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-from __future__ import absolute_import
+"""生成代码的views"""
 import json
 
 
-from flask import Blueprint, render_template, make_response
+from flask import Blueprint, render_template, make_response, redirect, url_for
 from flask.views import MethodView
 
 from requests.compat import urljoin, urlsplit
@@ -21,7 +21,7 @@ try:
 except ImportError:
     from Cookie import SimpleCookie
 
-bp = Blueprint('home', __name__)
+bp = Blueprint('generate', __name__)
 
 
 def repr_value(value):
@@ -33,8 +33,10 @@ def repr_value(value):
 class IndexView(MethodView):
 
     def get(self):
+        from flask import current_app
+        print('root', current_app.config)
         form = RequestDataForm()
-        return render_template('index.html', form=form)
+        return render_template('generate.html', form=form)
 
     def post(self):
         form = RequestDataForm()
@@ -113,7 +115,11 @@ class IndexView(MethodView):
             cookies=cookies,
             content_type=content_type
         )
-        return render_template('code-page.html', code=code)
+        form = CodeForm()
+        form.code.data = code
+        name = form.save()
+        url = url_for('run.run', filename=name)
+        return redirect(url)
 
 
 class CodeView(MethodView):
@@ -138,5 +144,5 @@ class CodeView(MethodView):
             return resp
 
 
-bp.add_url_rule('/', view_func=IndexView.as_view('index'))
-bp.add_url_rule('/code', view_func=CodeView.as_view('code'))
+bp.add_url_rule('/generate', view_func=IndexView.as_view('index'))
+# bp.add_url_rule('/code', view_func=CodeView.as_view('code'))

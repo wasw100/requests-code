@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+{% block container %}
+<table class="table">
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Desc</th>
+        <th>InsertTime</th>
+        <th>Delete</th>
+    </tr>
+    {% for item in items %}
+    <tr>
+        <td>{{ item.id }}</td>
+        <td><a href="{{ url_for('run.run', filename=item.name) }}">{{ item.name }}</a></td>
+        <td>{{ item.desc }}</td>
+        <td>{{ item.insert_time.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+        <td><button class="btn btn-link btn-delete" data-url="{{ url_for('code.item', item_id=item.id) }}">Delete</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}
+{%- block scripts -%}
+{{ super() }}
+<script>
+$(document).ready(function(){
+    $(".btn-delete").on("click", function(){
+        $.ajax({
+            url: $(this).data("url"),
+            type: "DELETE",
+            success: function(data) {
+                if (data.errcode) {
+                    alert(data.errmsg);
+                } else {
+                    window.location = "{{ request.url }}";
+                }
+            }
+        });
+    });
+});
+</script>
+{%- endblock scripts -%}
