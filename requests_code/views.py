@@ -68,7 +68,7 @@ class IndexView(MethodView):
 
         method = method.lower()
         body = ''.join(body)
-        content_type = header_dict.get('Content-Type')
+        content_type = header_dict.get('Content-Type', '')
 
         # set headers
         headers = []
