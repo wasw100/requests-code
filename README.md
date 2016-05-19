@@ -14,3 +14,9 @@ generate code from http request data
 - 删除做logger记录?
 
 - 使用json.dumps格式化data数据
+
+- OJ页面加上保存代码的按钮
+
+- 生成代码的界面加上不不包含headers(User-Agent, Referer)
+
+- 加上日志
