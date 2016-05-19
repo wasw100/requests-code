@@ -26,9 +26,7 @@ class RunView(MethodView):
             form = CodeForm()
             form.code.data = code
         else:
-            print('obj', obj)
             form = CodeForm(obj=obj)
-            print('*' * 20, obj.name, form.name.data)
             form.code.data = form.get_code()
         return render_template('code-page.html', form=form)
 
@@ -45,7 +43,6 @@ class RunView(MethodView):
             # 使用 subprocess.check_output 执行后, 返回执行结果
             try:
                 filepath = form.get_filepath()
-                print('Execute: %s %s' % (EXEC, filepath))
                 output = subprocess.check_output(
                     [EXEC, filepath],
                     stderr=subprocess.STDOUT,

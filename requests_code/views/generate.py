@@ -34,7 +34,6 @@ class IndexView(MethodView):
 
     def get(self):
         from flask import current_app
-        print('root', current_app.config)
         form = RequestDataForm()
         return render_template('generate.html', form=form)
 
