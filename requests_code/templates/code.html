@@ -13,13 +13,13 @@ def main():
     {% endif -%}
 
     {% if 'x-www-form-urlencoded' in content_type %}
-    body = {
+    data = {
     {%- for key, value in body %}
         '{{ key }}': {{ value }},
     {%- endfor %}
     }
     {% elif 'json' in content_type %}
-    body = {
+    data = {
     {%- for key, value in body %}
         '{{ key }}': {{ value }},
     {%- endfor %}
@@ -46,7 +46,7 @@ def main():
 
     r = requests.{{ method }}(url
     {%- if params %}, params=params{% endif -%}
-    {%- if 'json' in content_type %}, json=body
+    {%- if 'json' in content_type %}, json=data
     {%- elif body %}, data=data{% endif -%}
     {%- if headers %}, headers=headers{% endif -%}
     {%- if cookies %}, cookies=cookies{% endif -%}
