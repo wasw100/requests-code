@@ -95,7 +95,7 @@ class IndexView(MethodView):
         url = urljoin('http://{}'.format(host), p.path)
         params = [(x, repr_value(y)) for x, y in parse_qsl(p.query)]
 
-        if not content_type:
+        if method == 'get' or not content_type:
             pass
         elif 'x-www-form-urlencoded' in content_type:
             body = [(x, repr_value(y)) for x, y in parse_qsl(body)]

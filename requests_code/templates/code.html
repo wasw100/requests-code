@@ -12,7 +12,8 @@ def main():
     }
     {% endif -%}
 
-    {% if 'x-www-form-urlencoded' in content_type %}
+    {% if method == 'get' %}
+    {% elif 'x-www-form-urlencoded' in content_type %}
     data = {
     {%- for key, value in body %}
         '{{ key }}': {{ value }},
