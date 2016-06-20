@@ -39,7 +39,7 @@ class IndexView(MethodView):
 
     def post(self):
         form = RequestDataForm()
-        data = form.data.data
+        data = form.data.data.lstrip()
         lines = data.splitlines(True)
         if len(lines) < 3:
             return 'data less 3 lines'
@@ -110,8 +110,8 @@ class IndexView(MethodView):
             url=url,
             params=params,
             body=body,
-            headers=headers,
-            cookies=cookies,
+            headers=headers if form.contain_headers.data else None,
+            cookies=cookies if form.contain_cookies.data else None,
             content_type=content_type
         )
         form = CodeForm()
