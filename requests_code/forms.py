@@ -3,7 +3,7 @@ import os.path
 import string
 from flask import current_app
 from flask_wtf import Form
-from wtforms.fields import StringField, TextAreaField
+from wtforms.fields import StringField, TextAreaField, BooleanField, SubmitField
 from wtforms.validators import Optional, Required
 
 from requests_code.database import db
@@ -11,9 +11,25 @@ from requests_code.models import Code
 
 
 class RequestDataForm(Form):
-    host = StringField('Host', [Optional()])
-    data = TextAreaField('Request raw', [Required()])
-    action = StringField('action', [Required()])
+    host = StringField(
+        u'Host', [Optional()],
+        render_kw={'placeholder': u'不需要填写, 如果访问指定服务器填写IP或域名'}
+    )
+    filename = StringField(
+        '', [Optional()],
+        render_kw={'placeholder': u'文件名, 例如user.py, 不填会自动生成'}
+    )
+    desc = StringField(
+        '', [Optional()],
+        render_kw={'placeholder': u'描述, 选填'}
+    )
+    contain_headers = BooleanField(u'包含User-Agent', default=False)
+    contain_cookies = BooleanField(u'包含cookie', default=True)
+    data = TextAreaField(
+        '', [Required()],
+        render_kw={'rows': 16, 'placeholder': u'抓包的数据'}
+    )
+    submit = SubmitField(u'生成代码')
 
 
 class CodeForm(Form):

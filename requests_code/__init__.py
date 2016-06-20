@@ -4,7 +4,7 @@ from __future__ import absolute_import
 from flask import Flask
 from flask_bootstrap import Bootstrap
 from flask_nav import Nav
-from flask_nav.elements import Navbar, View, Link, Subgroup, Separator, Text
+from flask_nav.elements import Navbar, View, Link
 
 import config as _config
 from requests_code.database import db
@@ -18,7 +18,7 @@ nav.register_element('top', Navbar(
     View('Generate Code', 'generate.index'),
     View('OJ', 'run.run'),
     View('List', 'code.list'),
-    Link('使用说明', 'http://www.baidu.com/', target='_blank'),
+    Link('使用说明', 'http://www.baidu.com/'),
 ))
 
 

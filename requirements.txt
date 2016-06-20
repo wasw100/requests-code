@@ -3,5 +3,5 @@ flask-wtf
 flask-script
 requests
 flask-sqlalchemy
--e git+https://github.com/wasw100/flask-bootstrap.git#egg=Flask-Bootstrap
--e git+https://github.com/wasw100/flask-nav.git#egg=flask_nav
+flask-bootstrap
+flask-nav
