@@ -114,9 +114,11 @@ class IndexView(MethodView):
             cookies=cookies if form.contain_cookies.data else None,
             content_type=content_type
         )
-        form = CodeForm()
-        form.code.data = code
-        name = form.save()
+        code_form = CodeForm()
+        code_form.code.data = code
+        code_form.name.data = form.filename.data
+        code_form.desc.data = form.desc.data
+        name = code_form.save()
         url = url_for('run.run', filename=name)
         return redirect(url)
 
