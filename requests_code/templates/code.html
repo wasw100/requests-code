@@ -2,47 +2,50 @@
 import requests
 
 def main():
-    url = '{{ url }}'
-    {% if params %}
+    url = '{{ url }}'{% if params %}
+
     params = {
     {%- for key, value in params %}
         '{{ key }}': {{ value }},
-    {%- endfor %}
+    {%- endfor -%}
     }
     {%- endif -%}
+    {%- if method == 'get' -%}
+    {%- elif 'x-www-form-urlencoded' in content_type %}
 
-    {%- if method == 'get' %}
-    {% elif 'x-www-form-urlencoded' in content_type %}
     data = {
     {%- for key, value in body -%}
         '{{ key }}': {{ value }},
     {%- endfor -%}
     }
-    {%- elif 'json' in content_type -%}
+    {%- elif 'json' in content_type %}
+
     data = {
-    {%- for key, value in body %}
+    {%- for key, value in body -%}
         '{{ key }}': {{ value }},
     {%- endfor -%}
     }
     {%- elif body %}
+
     data = '{{ body }}'
     {%- endif -%}
+    {%- if headers %}
 
-    {%- if headers -%}
     headers = {
     {%- for key, value in headers %}
         '{{ key }}': '{{ value }}',
     {%- endfor %}
     }
-    {% endif -%}
-
+    {%- endif -%}
     {%- if cookies %}
+
     cookies = {
     {%- for key, value in cookies %}
         '{{ key }}': '{{ value }}',
     {%- endfor %}
     }
-    {% endif %}
+    {%- endif %}
+
     r = requests.{{ method }}(url
     {%- if params %}, params=params{% endif -%}
     {%- if 'json' in content_type %}, json=data
